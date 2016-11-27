@@ -33,7 +33,6 @@ conda search nosexcover --channel conda-forge
 ```
 
 
-
 About conda-forge
 =================
 
