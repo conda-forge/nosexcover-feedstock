@@ -1,12 +1,17 @@
-{%set version = "1.0.10" %}
+{% set name = "nosexcover" %}
+{% set version = "1.0.11" %}
+{% set compress_type = "tar.gz" %}
+{% set hash_type = "sha256" %}
+{% set hash = "298c3c655da587f6cab8a666e9f4b150320032431062dea91353988d45c8b883" %}
+{% set build = 0 %}
 
 package:
-  name: nosexcover
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: nosexcover-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/n/nosexcover/nosexcover-{{ version }}.tar.gz
+  fn: {{ name }}-{{ version }}.{{ compress_type }}
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
   md5: 12bf494a801b376debeb6a167c247391
 
 build:
@@ -14,7 +19,7 @@ build:
   entry_points:
     - xcover = nosexcover.nosexcover:XCoverage
 
-  number: 0
+  number: {{ build }}
   script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
@@ -33,9 +38,12 @@ test:
     - nosexcover.nosexcover
 
 about:
-  home: http://github.com/cmheisel/nose-xcover/
-  license: MIT License
+  home: https://github.com/cmheisel/nose-xcover/
+  license_file: {{ RECIPE_DIR }}/LICENSE.txt
+  license: MIT
+  license_family: MIT
   summary: 'Extends nose.plugins.cover to add Cobertura-style XML reports'
+  dev_url: https://github.com/cmheisel/nose-xcover/
 
 extra:
   recipe-maintainers:
