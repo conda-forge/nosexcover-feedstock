@@ -1,9 +1,8 @@
 {% set name = "nosexcover" %}
 {% set version = "1.0.11" %}
 {% set compress_type = "tar.gz" %}
-{% set hash_type = "sha256" %}
 {% set hash = "298c3c655da587f6cab8a666e9f4b150320032431062dea91353988d45c8b883" %}
-{% set build = 1 %}
+{% set build = 2 %}
 
 package:
   name: {{ name|lower }}
@@ -11,8 +10,8 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.{{ compress_type }}
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
-  {{ hash_type }}: {{ hash }}
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
+  sha256: {{ hash }}
 
 build:
   noarch: python
@@ -21,20 +20,22 @@ build:
     - xcover = nosexcover.nosexcover:XCoverage
 
   number: {{ build }}
-  script: python -m pip install --no-deps --ignore-installed .
+  script: {{ PYTHON }} -m pip install . --no-deps -vv
 
 requirements:
   host:
     - pip
-    - python
+    - python {{ python_min }}
     - setuptools
 
   run:
-    - python
+    - python >={{ python_min }}
     - nose
     - coverage >=3.4
 
 test:
+  requires:
+    - python {{ python_min }}
   imports:
     - nosexcover
     - nosexcover.nosexcover
